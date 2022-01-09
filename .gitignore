@@ -16,4 +16,7 @@ vendor/
 *.c
 *.h
 *.swp
-
+# Added by cargo
+/target
+*.sh
+*.d64
