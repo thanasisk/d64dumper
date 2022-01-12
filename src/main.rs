@@ -43,19 +43,10 @@ fn list(fname: String) {
     let mut image = fs::read(fname).expect("problem reading file");
     let bam_offset = 0x16500;
     let direntry_offset = bam_offset + 256;
-    let dirname_offset = direntry_offset + 0x05;
-    let dirname_len = 0x15 - 0x05;
+    let dentries_max = 0x08;
     let mut dentries = Vec::<DirEntry>::new();
-    for i in 0..8 {
+    for i in 0..dentries_max {
         dentries.push(parse_direntry(&mut image, direntry_offset + (0x20 * i)));
-        println!(
-            "{}",
-            get_dname(
-                &mut image,
-                dirname_offset + (0x20 * i),
-                dirname_len + dirname_offset + (0x20 * i)
-            )
-        )
     }
 }
 
@@ -89,5 +80,7 @@ fn parse_direntry(image: &mut Vec<u8>, start_offset: usize) -> DirEntry {
     ret.sector_sz = usize::from(ret.low_sz) + (usize::from(ret.high_sz) * 256);
     ret.byte_sz = (usize::from(ret.low_sz) + (usize::from(ret.high_sz) * 256)) * 254;
     print!("{} {}\t", ret.sector_sz, ret.byte_sz);
+    ret.dname = get_dname(image, start_offset + 0x05, start_offset + 0x05 + ret.dlen);
+    println!("{}", ret.dname);
     return ret;
 }

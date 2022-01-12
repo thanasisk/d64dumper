@@ -10,6 +10,8 @@ pub mod d64 {
         // can be made private + methods
         pub sector_sz: usize,
         pub byte_sz: usize,
+        pub dname: String,
+        pub dlen: usize,
     }
     impl DirEntry {
         pub fn new() -> DirEntry {
@@ -23,6 +25,8 @@ pub mod d64 {
                 high_sz: 0,
                 sector_sz: 0,
                 byte_sz: 0,
+                dname: String::new(),
+                dlen: 0x15 - 0x05,
             }
         }
     }
