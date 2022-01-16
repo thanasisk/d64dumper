@@ -29,5 +29,20 @@ pub mod d64 {
                 dlen: 0x15 - 0x05,
             }
         }
+        pub fn print(&self) {
+            print!("{}\t{}\t", self.track, self.sector);
+            match self.ftype {
+                0x00 => print!("Scratched\t"),
+                0x80 => print!("DEL\t"),
+                0x81 => print!("SEQ\t"),
+                0x82 => print!("PRG\t"),
+                0x83 => print!("USR\t"),
+                0x84 => print!("REL\t"),
+                _ => print!("undefined!\t"),
+            }
+            print!("{} {} ", self.ftrack, self.fsector);
+            print!("{} {}\t", self.sector_sz, self.byte_sz);
+            println!("{}", self.dname);
+        }
     }
 }
