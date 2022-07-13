@@ -5,7 +5,6 @@ use crate::d64::d64::DirEntry;
 use crate::petscii::petscii::pet2ascii;
 use std::env;
 use std::fs;
-use std::process::exit;
 use std::str;
 
 fn main() {
@@ -30,7 +29,8 @@ fn main() {
     std::process::exit(0);
 }
 fn usage() {
-    println!("λελ");
+    println!("allowed commands are:\nversion\tlist\tdump\n");
+    std::process::exit(1);
 }
 fn list(diskname: String) {
     let entries = parse_disk(diskname);
