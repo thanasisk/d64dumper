@@ -35,7 +35,8 @@ fn usage() {
 fn list(diskname: String) {
     let entries = parse_disk(diskname);
     for entry in entries.iter() {
-        entry.print()
+        entry.print();
+        //entry.json();
     }
 }
 fn parse_disk(fname: String) -> Vec<DirEntry> {

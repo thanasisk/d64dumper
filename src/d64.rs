@@ -1,4 +1,7 @@
 pub mod d64 {
+    use serde::{Deserialize, Serialize};
+    use serde_json::Result;
+    #[derive(Serialize, Deserialize)]
     pub struct DirEntry {
         pub track: u8,
         pub sector: u8,
@@ -30,6 +33,7 @@ pub mod d64 {
             }
         }
         pub fn print(&self) {
+            print!("track\tsector\tftype\tftrack\tfsector\tsector_sz byte_sz\tdname\n");
             print!("{}\t{}\t", self.track, self.sector);
             match self.ftype {
                 0x00 => print!("Scratched\t"),
@@ -40,9 +44,15 @@ pub mod d64 {
                 0x84 => print!("REL\t"),
                 _ => print!("undefined!\t"),
             }
-            print!("{} {} ", self.ftrack, self.fsector);
-            print!("{} {}\t", self.sector_sz, self.byte_sz);
-            println!("{}", self.dname);
+            print!("{}\t{}\t", self.ftrack, self.fsector);
+            print!("{}\t{}\t", self.sector_sz, self.byte_sz);
+            println!("\t{}", self.dname);
+        }
+        pub fn json(&self) -> Result<()> {
+            //print!("{}",json::stringify(self));
+            let j = serde_json::to_string(&self)?;
+            println!("{}",j);
+            Ok(())
         }
     }
 }
